@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="the_trapper" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="ia/;monstre/;animaux/;" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/the_trapper" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/the_trapper" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="`sdl-config --cflags`" />
+		</Compiler>
+		<Linker>
+			<Add option="`sdl-config --libs`" />
+			<Add library="libSDL2" />
+			<Add library="libSDL2_image" />
+			<Add library="libSDL2_ttf" />
+			<Add library="libSDL2_mixer" />
+		</Linker>
+		<Unit filename="src/affichage.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/affichage.h" />
+		<Unit filename="src/affichageBatiments.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/affichageBatiments.h" />
+		<Unit filename="src/cabane.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/cabane.h" />
+		<Unit filename="src/calculMain.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/calculMain.h" />
+		<Unit filename="src/chargement_Image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/chargement_Image.h" />
+		<Unit filename="src/chargement_Sons.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/chargement_Sons.h" />
+		<Unit filename="src/define.h" />
+		<Unit filename="src/defineBatiment.h" />
+		<Unit filename="src/gestionAnimaux.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="animaux/" />
+		</Unit>
+		<Unit filename="src/gestionAnimaux.h">
+			<Option virtualFolder="animaux/" />
+		</Unit>
+		<Unit filename="src/gestionBatiments.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/gestionBatiments.h" />
+		<Unit filename="src/gestionCombat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/gestionCombat.h" />
+		<Unit filename="src/gestionFaim.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/gestionFaim.h" />
+		<Unit filename="src/gestionMonstres.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="monstre/" />
+		</Unit>
+		<Unit filename="src/gestionMonstres.h">
+			<Option virtualFolder="monstre/" />
+		</Unit>
+		<Unit filename="src/gestionMort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/gestionMort.h" />
+		<Unit filename="src/gestionRessources.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/gestionRessources.h" />
+		<Unit filename="src/gestionTemps.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/gestionTemps.h" />
+		<Unit filename="src/ia.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="ia/" />
+		</Unit>
+		<Unit filename="src/ia.h" />
+		<Unit filename="src/initialisation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/initialisationBatiments.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/initialisationBatiments.h" />
+		<Unit filename="src/inventaire.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/inventaire.h" />
+		<Unit filename="src/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/main.h" />
+		<Unit filename="src/manipulationListeAnimaux.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="animaux/" />
+		</Unit>
+		<Unit filename="src/manipulationListeBatiments.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/manipulationListeBatiments.h" />
+		<Unit filename="src/manipulationListeBlock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/manipulationListeMonstres.c">
+			<Option compilerVar="CC" />
+			<Option virtualFolder="monstre/" />
+		</Unit>
+		<Unit filename="src/manipulationListeMonstres.h">
+			<Option virtualFolder="monstre/" />
+		</Unit>
+		<Unit filename="src/menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/menu.h" />
+		<Unit filename="src/personnage.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/personnage.h" />
+		<Unit filename="src/reglages.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/reglages.h" />
+		<Unit filename="src/systemeQuetes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/systemeQuetes.h" />
+		<Unit filename="src/testIA.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

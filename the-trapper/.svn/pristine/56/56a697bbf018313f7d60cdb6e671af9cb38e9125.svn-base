@@ -1,0 +1,569 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "gestionAnimaux.h"
+#include "gestionMonstres.h"
+#include "manipulationListeMonstres.h"
+#include "define.h"
+#include "personnage.h"
+
+int testChampsVisionAnimaux (struct listeAnimal *liste, Personnage *personnage)
+{
+    int largeurAnimal = renvoieLargeurAnimal(liste->cle->valeur->race);
+    int hauteurAnimal = renvoieHauteurAnimal(liste->cle->valeur->race);
+    int xCoinGauche = personnage->coordonnees.coordPerso.x - (4*64);
+    int yCoinGauche = personnage->coordonnees.coordPerso.y - (3*64);
+    SDL_Rect coord[4];
+    coord[0].x = liste->cle->valeur->coordx;
+    coord[0].y = liste->cle->valeur->coordy;
+    coord[1].x = coord[0].x + largeurAnimal;
+    coord[1].y = coord[0].y;
+    coord[2].x = coord[1].x;
+    coord[2].y = coord[0].y + hauteurAnimal;
+    coord[3].x = coord[0].x;
+    coord[3].y = coord[2].y;
+
+    int i = 0;
+    for ( i = 0; i < 4; i++)
+    {
+        coord[i].x -= xCoinGauche;
+        coord[i].y -= yCoinGauche;
+        if ((coord[i].x >= 0 && coord[i].x <= 640) && (coord[i].y >= 0 && coord[i].y <= 512))
+        {
+            return True;
+        }
+    }
+    return False;
+}
+void gestionDropAnimaux (struct listeAnimal *liste, struct parametreAnimaux *tabParametre, Personnage *personnage)
+{
+
+    int xAnimal = liste->cle->valeur->coordx/LARGEUR_TILE;
+    int yAnimal = liste->cle->valeur->coordy/LARGEUR_TILE;
+    int xPerso = personnage->coordonnees.coordPerso.x/LARGEUR_TILE;
+
+    if ((rand()%tabParametre[liste->cle->valeur->race].tabChanceDropObjet[0]) == 1)
+    {
+        personnage->tableauCarte[xAnimal][yAnimal][1].id = tabParametre[liste->cle->valeur->race].tabIdObjetsDrop[0];
+        personnage->tableauCarte[xAnimal][yAnimal][1].quantite = 1;
+        miseAJourInfosObjetCarte(personnage, xAnimal, yAnimal, 1);
+    }
+    if ((rand()%tabParametre[liste->cle->valeur->race].tabChanceDropObjet[1]) == 1)
+    {
+        personnage->tableauCarte[xAnimal + (xAnimal-xPerso)][yAnimal][1].id = tabParametre[liste->cle->valeur->race].tabIdObjetsDrop[1];
+        personnage->tableauCarte[xAnimal + (xAnimal-xPerso)][yAnimal][1].quantite = 1;
+        miseAJourInfosObjetCarte(personnage, xAnimal + (xAnimal-xPerso), yAnimal, 1);
+    }
+}
+void gestionAnimaux(struct listeAnimal *liste, Personnage *personnage, struct parametreAnimaux *tabParametre, ListeMonstres *listeMonstres)
+{
+    regulationPopulation(liste, personnage, tabParametre);
+    gestionDeplacement(liste, tabParametre, personnage, listeMonstres);
+}
+
+int testZoneDeplacement (struct listeAnimal *liste, Personnage *personnage)
+{
+    if (((liste->cle->valeur->coordx >= (personnage->coordonnees.coordPerso.x - (15*LARGEUR_TILE))) && (liste->cle->valeur->coordx <= (personnage->coordonnees.coordPerso.x + (15*LARGEUR_TILE))))
+        && ((liste->cle->valeur->coordy >= (personnage->coordonnees.coordPerso.y - (15*LARGEUR_TILE))) && (liste->cle->valeur->coordy <= (personnage->coordonnees.coordPerso.y + (15*LARGEUR_TILE)))))
+            return True;
+    return False;
+}
+void gestionDeplacement (struct listeAnimal *liste, struct parametreAnimaux *tabParam, Personnage *personnage, ListeMonstres *listeMonstres)
+{
+    debut(liste);
+    if (estVide(liste) == False)
+    {
+        while (estFin(liste) == False)
+        {
+            if (testZoneDeplacement(liste, personnage) == True)
+                deplacementAnimaux(liste, tabParam, personnage, listeMonstres);
+
+            deplacerCleDevant(liste);
+        }
+    }
+
+}
+void gestionOrientation (struct listeAnimal *liste, struct parametreAnimaux *tabParam, Personnage *personnage)
+{
+    if (testChangementOrientation(liste) == True)
+    {
+        changerOrientation(liste, tabParam, personnage);
+    }
+
+
+}
+void gestionMomentAnimaux (struct listeAnimal *liste, struct parametreAnimaux *tabParam, unsigned long long tempsActuel)
+{
+    int i = 1;
+    liste->cle->valeur->moment = -1;
+    while (i <= tabParam[liste->cle->valeur->race].nombreDeMouvement)
+    {
+        if (tempsActuel - liste->cle->valeur->tempsMoment <= i*tabParam[liste->cle->valeur->race].tempsMoment)
+        {
+                liste->cle->valeur->moment = i-1;
+                break;
+        }
+        i ++;
+    }
+    if (liste->cle->valeur->moment == -1)
+    {
+        liste->cle->valeur->tempsMoment = tempsActuel;
+        liste->cle->valeur->moment = 0;
+    }
+
+}
+void deplacementAnimaux(struct listeAnimal *liste, struct parametreAnimaux *tabParam, Personnage *personnage, ListeMonstres *listeMonstres)
+{
+    gestionOrientation(liste, tabParam, personnage);
+    int vitesse = tabParam[liste->cle->valeur->race].vitesse;
+    unsigned long long tempsActuel = SDL_GetTicks();
+
+    if (testColisionAnimaux(liste, tabParam, personnage) == True)
+    {
+        if (liste->cle->valeur->orientation == DROITE)
+        {
+            liste->cle->valeur->coordx += vitesse;
+        }
+        else if (liste->cle->valeur->orientation == GAUCHE)
+        {
+            liste->cle->valeur->coordx -= vitesse;
+        }
+        else if (liste->cle->valeur->orientation == HAUT)
+        {
+            liste->cle->valeur->coordy -= vitesse;
+
+        }
+        else if (liste->cle->valeur->orientation == BAS)
+        {
+            liste->cle->valeur->coordy += vitesse;
+        }
+        if (testChampsVisionAnimaux(liste, personnage) == True)
+        {
+            if (testColisionAnimauxContreAnimauxEtMonstre(liste, tabParam, personnage, listeMonstres) == False)
+            {
+                if (tempsActuel - liste->cle->valeur->tempsChangementOrientation > 1000)
+                {
+                    changerOrientation(liste, tabParam, personnage);
+                    liste->cle->valeur->tempsChangementOrientation = tempsActuel;
+                }
+            }
+            if (testColisionAnimauxPersonnage(liste, tabParam, personnage) == False)
+            {
+                if (tempsActuel - liste->cle->valeur->tempsChangementOrientation > 1000)
+                {
+                    changerOrientation(liste, tabParam, personnage);
+                    liste->cle->valeur->tempsChangementOrientation = tempsActuel;
+                }
+            }
+
+            gestionMomentAnimaux(liste, tabParam, tempsActuel);
+        }
+
+    }
+    else
+    {
+        if (tempsActuel - liste->cle->valeur->tempsChangementOrientation > 1000)
+        {
+            changerOrientation(liste, tabParam, personnage);
+            liste->cle->valeur->tempsChangementOrientation = tempsActuel;
+        }
+    }
+
+}
+void changerOrientation (struct listeAnimal *liste, struct parametreAnimaux *tabParam, Personnage *personnage)
+{
+    int s = 0;
+    int ancienneOrientation = liste->cle->valeur->orientation;
+    do
+    {
+        if (s >= 10)        //c'est pour éviter la boucle infini (et j'ai la flemme de faire ça mieux)
+            break;
+        liste->cle->valeur->orientation = (rand()%4)+2;
+        s ++;
+    }while (testColisionAnimaux(liste, tabParam, personnage) != True && ancienneOrientation == liste->cle->valeur->orientation);
+    liste->cle->valeur->coordxAuChangementOrientation = liste->cle->valeur->coordx;
+    liste->cle->valeur->coordyAuChangementOrientation = liste->cle->valeur->coordy;
+    liste->cle->valeur->moment = 0;
+    liste->cle->valeur->tempsMoment = SDL_GetTicks();
+}
+int testChangementOrientation (struct listeAnimal *liste)      //test si l'animal s'est déplacé de 10 blocks avec la même orientation
+{
+    if (liste->cle->valeur->orientation == DROITE)
+    {
+        if ((liste->cle->valeur->coordx - liste->cle->valeur->coordxAuChangementOrientation) >= LARGEUR_TILE*10)
+            return True;
+    }
+    else if (liste->cle->valeur->orientation == GAUCHE)
+    {
+        if ((liste->cle->valeur->coordxAuChangementOrientation - liste->cle->valeur->coordx) >= LARGEUR_TILE*10)
+            return True;
+    }
+    else if (liste->cle->valeur->orientation == HAUT)
+    {
+         if ((liste->cle->valeur->coordyAuChangementOrientation - liste->cle->valeur->coordy) >= LARGEUR_TILE*10)
+            return True;
+    }
+    else if (liste->cle->valeur->orientation == BAS)
+    {
+        if ((liste->cle->valeur->coordy - liste->cle->valeur->coordyAuChangementOrientation) >= LARGEUR_TILE*10)
+            return True;
+    }
+    return False;
+
+}
+void retournerCoordAnimaux (SDL_Rect *tableauCoord, struct valeurAnimal *valeur)
+{
+    int largeur = renvoieLargeurAnimal(valeur->race);
+    int hauteur = renvoieHauteurAnimal(valeur->race);
+
+    tableauCoord[0].x = valeur->coordx;
+    tableauCoord[0].y = valeur->coordy;
+    tableauCoord[1].x = valeur->coordx + largeur;
+    tableauCoord[1].y = valeur->coordy;
+    tableauCoord[2].x = valeur->coordx + largeur;
+    tableauCoord[2].y = valeur->coordy + hauteur;
+    tableauCoord[3].x = valeur->coordx;
+    tableauCoord[3].y = valeur->coordy + hauteur;
+}
+int testColisionAnimauxPersonnage (struct listeAnimal *liste, struct parametreAnimaux *tabParam ,Personnage *perso)
+{
+    SDL_Rect coordAnimal[4];
+    retournerCoordAnimaux(coordAnimal, liste->cle->valeur);
+    int vitesse = tabParam[liste->cle->valeur->race].vitesse;
+
+    if (liste->cle->valeur->orientation == DROITE)
+    {
+        if ((perso->coordYA >= coordAnimal[1].y && perso->coordYA <= coordAnimal[2].y) || (perso->coordYD >= coordAnimal[1].y && perso->coordYD <= coordAnimal[2].y))
+        {
+           if ((coordAnimal[1].x + vitesse >= perso->coordXA && coordAnimal[1].x + vitesse <= perso->coordXB))
+           {
+               return False;
+           }
+        }
+
+    }
+    else if (liste->cle->valeur->orientation == GAUCHE)
+    {
+        if ((perso->coordYA >= coordAnimal[1].y && perso->coordYA <= coordAnimal[2].y) || (perso->coordYD >= coordAnimal[1].y && perso->coordYD <= coordAnimal[2].y))
+        {
+           if ((coordAnimal[0].x - vitesse <= perso->coordXB && coordAnimal[3].x - vitesse >= perso->coordXA))
+           {
+               return False;
+           }
+        }
+
+    }
+    else if (liste->cle->valeur->orientation == HAUT)
+    {
+         if ((coordAnimal[0].x <= perso->coordXA && coordAnimal[1].x  >= perso->coordXA) || (coordAnimal[0].x <= perso->coordXB && coordAnimal[1].x >= perso->coordXB))
+         {
+             if (coordAnimal[0].y - vitesse <= perso->coordYD && coordAnimal[0].y - vitesse >= perso->coordYA)
+                return False;
+         }
+    }
+    else if (liste->cle->valeur->orientation == BAS)
+    {
+        if ((coordAnimal[0].x <= perso->coordXA && coordAnimal[1].x  >= perso->coordXA) || (coordAnimal[0].x <= perso->coordXB && coordAnimal[1].x >= perso->coordXB))
+        {
+            if (coordAnimal[2].y + vitesse >= perso->coordYA && coordAnimal[2].y + vitesse <= perso->coordYD)
+                return False;
+        }
+    }
+    return True;
+}
+int testColisionAnimalContreMonstres (SDL_Rect* coordAnimal, ListeMonstres *listeMonstres, Personnage *personnage)
+{
+    int centreMonstrex = 0, centreMonstrey = 0;
+    if (estVideListeMonstres(listeMonstres) == False)
+    {
+        listeMonstres->cle = listeMonstres->premier;
+        while (estDernierListeMonstres(listeMonstres) == False)
+        {
+            centreMonstrex = ((listeMonstres->cle->valeur->coordx + (64/2)))/64;
+            centreMonstrey = ((listeMonstres->cle->valeur->coordy + (64/2)))/64;
+            int p;
+            for (p = 0; p < 4; p++)
+            {
+                if (coordAnimal[p].x == centreMonstrex && coordAnimal[p].y == centreMonstrey)
+                {
+                    listeMonstres->cle = listeMonstres->premier;
+                    return False;
+                }
+            }
+            deplacerCleDevantListeMonstres(listeMonstres);
+        }
+        listeMonstres->cle = listeMonstres->premier;
+        return True;
+
+    }
+    return True;
+}
+int testColisionAnimauxContreAnimauxEtMonstre (struct listeAnimal *liste, struct parametreAnimaux *tab, Personnage *personnage, ListeMonstres *listeMonstres)
+{
+    struct animal *auxAnimal = malloc(sizeof(*auxAnimal));
+    auxAnimal = liste->cle;
+    debut(liste);
+    SDL_Rect coordAnimal1[4], coordAnimal2[4];
+    int vitesse = tab[auxAnimal->valeur->race].vitesse;
+    int orientation = auxAnimal->valeur->orientation;
+
+    retournerCoordAnimaux(coordAnimal1, auxAnimal->valeur);
+    int i = 0;
+    for (i = 0; i < 4; i ++)
+    {
+        coordAnimal1[i].x = coordAnimal1[i].x / LARGEUR_TILE;
+        coordAnimal1[i].y = coordAnimal1[i].y / LARGEUR_TILE;
+    }
+    SDL_Rect centreAnimal2;
+
+    while (estFin(liste) == False && estVide(liste) == False)
+    {
+        if (testColisionAnimalContreMonstres(coordAnimal1, listeMonstres, personnage) == False)
+        {
+            liste->cle = auxAnimal;
+            return False;
+        }
+        if (liste->cle != auxAnimal)        // pour pas qui se compare à lui même
+        {
+            retournerCoordAnimaux(coordAnimal2, liste->cle->valeur);
+            centreAnimal2.x = ((coordAnimal2[0].x + coordAnimal2[1].x)/2)/LARGEUR_TILE;
+            centreAnimal2.y = ((coordAnimal2[0].y + coordAnimal2[3].y)/2)/LARGEUR_TILE;
+
+            int p;
+            for (p = 0; p < 4; p++)
+            {
+                if (coordAnimal1[p].x == centreAnimal2.x && coordAnimal1[p].y == centreAnimal2.y)
+                {
+                    liste->cle = auxAnimal;
+                    return False;
+                }
+            }
+
+
+        }
+
+
+        deplacerCleDevant(liste);
+    }
+    liste->cle = auxAnimal;
+    return True;
+}
+int testColisionAnimaux(struct listeAnimal *liste, struct parametreAnimaux *tab, Personnage *perso)     //renvoie true si il peut passer
+{
+    int largeurAnimal = renvoieLargeurAnimal(liste->cle->valeur->race);
+    int hauteurAnimal = renvoieHauteurAnimal(liste->cle->valeur->race);
+    int coordx[4];
+    int coordy[4];
+    int vitesse = tab[liste->cle->valeur->race].vitesse;
+
+    coordx[0] = liste->cle->valeur->coordx;
+    coordy[0] = liste->cle->valeur->coordy;
+    coordx[1] = coordx[0] + largeurAnimal;
+    coordy[1] = coordy[0];
+    coordx[2] = coordx[1];
+    coordy[2] = coordy[1] + hauteurAnimal;
+    coordx[3] = coordx[0];
+    coordy[3] = coordy[2];
+
+    if (liste->cle->valeur->orientation == DROITE)
+    {
+        if ((perso->tableauCarte[((int)(coordx[1]+vitesse)/LARGEUR_TILE)][((int)(coordy[1]/LARGEUR_TILE))][0].colision == True)
+            || (perso->tableauCarte[((int)(coordx[2]+vitesse)/LARGEUR_TILE)][((int)(coordy[2]/LARGEUR_TILE))][0].colision == True))
+        {
+            return False;
+        }
+
+    }
+    else if (liste->cle->valeur->orientation == GAUCHE)
+    {
+        if ((perso->tableauCarte[((int)(coordx[0]-vitesse)/LARGEUR_TILE)][((int)(coordy[0]/LARGEUR_TILE))][0].colision == True)
+            || (perso->tableauCarte[((int)(coordx[3]-vitesse)/LARGEUR_TILE)][((int)(coordy[3]/LARGEUR_TILE))][0].colision == True))
+        {
+            return False;
+        }
+
+    }
+    else if (liste->cle->valeur->orientation == HAUT)
+    {
+        if ((perso->tableauCarte[((int)(coordx[0])/LARGEUR_TILE)][((int)((coordy[0]-vitesse)/LARGEUR_TILE))][0].colision == True)
+            || (perso->tableauCarte[((int)(coordx[1])/LARGEUR_TILE)][((int)((coordy[1]-vitesse)/LARGEUR_TILE))][0].colision == True))
+        {
+            return False;
+        }
+
+    }
+    else if (liste->cle->valeur->orientation == BAS)
+    {
+        if ((perso->tableauCarte[((int)(coordx[2])/LARGEUR_TILE)][((int)((coordy[2]+vitesse)/LARGEUR_TILE))][0].colision == True)
+            || (perso->tableauCarte[((int)(coordx[3])/LARGEUR_TILE)][((int)((coordy[3]+vitesse)/LARGEUR_TILE))][0].colision == True))
+        {
+            return False;
+        }
+
+    }
+
+
+    return True;
+
+}
+
+void regulationPopulation (struct listeAnimal *liste, Personnage *personnage, struct parametreAnimaux *tab)
+{
+
+    if (tailleListe(liste) < NB_ANIMAUX_MAX)
+        gestionApparition(liste, personnage, tab);
+    debut(liste);
+    while (estFin(liste) == False && estVide(liste) == False)
+    {
+        if (testSante(liste, tab) == True)
+            supprimerElement(liste);
+        if (testHorsLimite(liste, personnage) == True)
+            supprimerElement(liste);
+        if (testZoneDesaparition(liste, personnage) == True)
+        {
+
+            int chiffre = rand()%tab[liste->cle->valeur->race].chanceDesaparition;
+            gestionDesaparition(liste, tab, chiffre);
+        }
+
+
+        deplacerCleDevant(liste);
+    }
+
+}
+void gestionDesaparition (struct listeAnimal *liste, struct parametreAnimaux *tab, int chiffre)
+{
+
+    if (chiffre == 1)
+    {
+        supprimerElement(liste);
+    }
+}
+void gestionApparition (struct listeAnimal *liste, Personnage *personnage, struct parametreAnimaux *tab)
+{
+
+
+    debut(liste);
+    int x = 0, y = 0, X = 0, Y = 0;
+    int xDepart = (personnage->coordonnees.coordPerso.x/LARGEUR_TILE) - 30;
+    int yDepart = (personnage->coordonnees.coordPerso.y/LARGEUR_TILE) - 30;
+    struct valeurAnimal valeursAnimal;
+
+    x = xDepart;
+    y = yDepart;
+    X = x + 60;
+    Y = y + 60;
+
+
+    while (x < X)
+    {
+        if (tailleListe(liste) >= NB_ANIMAUX_MAX)
+                break;
+        while (y < Y)
+        {
+            if (tailleListe(liste) >= NB_ANIMAUX_MAX)
+                break;
+            if ((x > xDepart + 15 && x < X - 15) && (y > yDepart + 15 && y < Y-15))     //si on est plus dans la zone d'apparition
+            {
+                y += 30;
+            }
+
+            if (testSurfaceApparition(personnage, x, y) != False)
+            {
+                int race = retourRaceApparition(personnage, tab);
+                if (race != -1)
+                {
+                    valeursAnimal.coordx = valeursAnimal.coordxAuChangementOrientation = x*LARGEUR_TILE;
+                    valeursAnimal.coordy = valeursAnimal.coordyAuChangementOrientation = y*LARGEUR_TILE;
+                    valeursAnimal.orientation = DROITE;
+                    valeursAnimal.race = race;
+                    valeursAnimal.sante = tab[race].santeDeBase;
+                    valeursAnimal.moment = 0;
+                    valeursAnimal.tempsMoment = 0;
+
+                    ajouterElementDebut(liste, valeursAnimal);
+                }
+
+
+            }
+            y ++;
+        }
+        y = yDepart;
+        x ++;
+    }
+}
+int retourRaceApparition (Personnage *personnage, struct parametreAnimaux *tab)
+{
+
+    int i = 0;
+
+    for (i = 0; i < NB_RACE; i ++)
+    {
+
+        int chiffre = (rand()%tab[i].chanceApparition);
+        if (chiffre == 1)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+int testSurfaceApparition (Personnage *personnage, int x, int y)
+{
+    if (personnage->tableauCarte[x][y][0].colision == False)
+        return True;
+    else
+        return False;
+}
+int testZoneDesaparition (struct listeAnimal *liste, Personnage *personnage)
+{
+    int x = (personnage->coordonnees.coordPerso.x/LARGEUR_TILE)-30;
+    int y = (personnage->coordonnees.coordPerso.y/LARGEUR_TILE)-30;
+    int xAnimal = liste->cle->valeur->coordx/LARGEUR_TILE;
+    int yAnimal = liste->cle->valeur->coordy/LARGEUR_TILE;
+
+    if ((xAnimal >= x+10 && xAnimal <= x+50) && (yAnimal >= y+10 && yAnimal <= y+50))
+        return False;
+    return True;
+}
+int testAnimalBloque(struct listeAnimal *liste, Personnage *personnage)
+{
+    int x = liste->cle->valeur->coordx/64;
+    int y = liste->cle->valeur->coordy/64;
+
+    if (personnage->tableauCarte[x][y][0].colision == True)
+        return True;
+    else
+        return False;
+}
+int testHorsLimite (struct listeAnimal *liste, Personnage *personnage)
+{
+    int x = (personnage->coordonnees.coordPerso.x/LARGEUR_TILE)-30;
+    int y = (personnage->coordonnees.coordPerso.y/LARGEUR_TILE)-30;
+    int xAnimal = liste->cle->valeur->coordx/LARGEUR_TILE;
+    int yAnimal = liste->cle->valeur->coordy/LARGEUR_TILE;
+
+    if ((xAnimal >= x && xAnimal <= x+60) && (yAnimal >= y && yAnimal <= y+60))
+    {
+        return False;
+    }
+    return True;
+}
+int testSante (struct listeAnimal *liste, struct parametreAnimaux *tab)
+{
+    if (liste->cle->valeur->sante < (((int)(tab[liste->cle->valeur->race].santeDeBase/100)*20)))
+    {
+        return True;
+    }
+    return False;
+}
+
+int renvoieLargeurAnimal(int race)
+{
+    return 64;
+
+}
+int renvoieHauteurAnimal (int race)
+{
+    return 64;
+}

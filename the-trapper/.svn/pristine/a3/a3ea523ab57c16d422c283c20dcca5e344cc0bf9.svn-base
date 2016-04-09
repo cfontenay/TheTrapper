@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+#include "main.h"
+#include "define.h"
+#include "calculMain.h"
+#include "affichage.h"
+#include "chargement_Sons.h"
+#include "personnage.h"
+#include "chargement_Image.h"
+#include "gestionAnimaux.h"
+#include "gestionCombat.h"
+void gestionCombatAnimaux (SDL_Renderer *rendu, struct listeAnimal *listeAnimaux, struct parametreAnimaux *tabParam, Personnage *personnage, Images *toutesLesImages, TTF_Font *police)
+{
+    //je retire la vie avant pour garder la clé de listeAnimal
+    if (retirerVieAnimaux(listeAnimaux, personnage) == True)
+        gestionDropAnimaux(listeAnimaux, tabParam, personnage);
+    animationCoup(rendu, personnage, toutesLesImages, listeAnimaux, tabParam, police);
+    usureDesOutils(personnage);
+
+}
+int retirerVieAnimaux (struct listeAnimal *listeAnimaux, Personnage *personnage)
+{
+    int id = personnage->inventairePerso.barrePlacement[personnage->inventairePerso.caseSelectionnerBarrePlacement].id;
+    if (id == 23)   //épée
+    {
+        listeAnimaux->cle->valeur->sante -= DEGAT_EPEE;
+    }
+    else if (id == 16 || id == 19)
+        listeAnimaux->cle->valeur->sante -= DEGAT_PIOCHE;
+    else if (id == 17 || id == 20)
+        listeAnimaux->cle->
+    else
+    {
+        listeAnimaux->cle->valeur->sante -= DEGAT_POING;
+    }
+    if (listeAnimaux->cle->valeur->sante <= 0)
+    {
+        supprimerElement(listeAnimaux);
+        return True;
+    }
+    return False;
+}
+void animationCoup (SDL_Renderer *rendu, Personnage *personnage, Images *toutesLesImages, struct listeAnimal *listeAnimaux, struct parametreAnimaux *tabParam, TTF_Font *police)
+{
+    SDL_Rect coordAffichage, coordDecoupage;
+    renvoieCoordDecoupageCoup(personnage, toutesLesImages, &coordDecoupage);
+
+    /* À finir : */
+    if (personnage->orientation == GAUCHE)
+        coordAffichage.x = personnage->coordonnees.coordPersoEcran.x + 23 - coordDecoupage.w;       //23 c'est la largeur de l'image du perso
+    else if (personnage->orientation == DROITE)
+        coordAffichage.x = personnage->coordonnees.coordPersoEcran.x;
+    coordAffichage.y = personnage->coordonnees.coordPersoEcran.y;
+
+
+    /* c'est parti pour les blits*/
+    int i = 0, calcul = 0, int id = personnage->inventairePerso.barrePlacement[personnage->inventairePerso.caseSelectionnerBarrePlacement].id;
+    unsigned long long tempsActuel = SDL_GetTicks(), temps = tempsActuel, tempsAffichage = temps;
+    while (calcul <= (VITESSE_FRAME_COUP*NB_FRAME_COUP))
+    {
+        tempsActuel = SDL_GetTicks();
+        calcul = tempsActuel - temps;
+        if (calcul >= VITESSE_FRAME_COUP*i)
+        {
+            coordDecoupage.x = i*coordDecoupage.w;
+            i += 1;
+        }
+        if (tempsActuel - tempsAffichage > 32)
+        {
+            blitCarteV3(personnage, toutesLesImages);
+            gestionAnimaux(listeAnimaux, personnage, tabParam);
+            blitAnimaux(listeAnimaux, toutesLesImages, personnage);
+            afficherInterfaceV2(personnage, police, toutesLesImages);
+            if (id < 16 && id >= 29)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupPoing, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+            else if (id == 16 || id == 19)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupPioche, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+            else if (id == 17 || id == 20)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupHache, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+            else if (id == 18 || id == 21)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupPelle, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+            else if (id == 23)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupEpee, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+
+
+
+            blittageTexture(rendu, toutesLesImages);
+            SDL_RenderPresent(rendu);
+            tempsAffichage = tempsActuel;
+        }
+
+
+    }
+
+}
+
+void renvoieCoordDecoupageCoup(Personnage *personnage, Images *toutesLesImages, SDL_Rect *coord)
+{
+    coord->w = toutesLesImages->imagesPersonnage.tileSetAnimationCoupEpee->w/NB_FRAME_COUP_EPEE;
+    coord->h = toutesLesImages->imagesPersonnage.tileSetAnimationCoupEpee->h/4;
+    coord->y = (personnage->orientation-2) * coord->h;
+}

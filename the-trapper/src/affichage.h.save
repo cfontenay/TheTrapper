@@ -1,0 +1,13 @@
+#ifndef AFFICHAGE_H_INCLUDED
+#define AFFICHAGE_H_INCLUDED
+
+
+
+#endif
+#include "define.h"
+#include "personnage.h"
+
+void affichagePersonnage(SDL_Rect coordPerso, Personnage *personnage, Images *toutesLesImages);
+void blitCarte( Personnage *perso, Images *toutesLesImages, Coordonnees coordonnees, int listeXY[2][4]);
+void afficherInterface( Personnage *personnage, TTF_Font *police, Images *images);
+int affichageSouris (SDL_Window *ecran, Personnage *perso, Images *toutesLesImages, int tableauIDObjetPlacable[NB_OBJET_PLACABLE], Coordonnees *coordonnees);

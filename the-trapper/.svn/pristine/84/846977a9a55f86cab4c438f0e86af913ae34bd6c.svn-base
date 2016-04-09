@@ -1,0 +1,22 @@
+#ifndef CALCULMAIN_H_INCLUDED
+#define CALCULMAIN_H_INCLUDED
+
+typedef struct Input Input;
+struct Input
+{
+    int touche[200];
+};
+
+#endif
+#include "define.h"
+#include "personnage.h"
+#include "main.h"
+
+void gestionMomentPersonnage(Personnage *personnage, unsigned long long tempsActuel);
+void deplacerPersonnage(Coordonnees *coordonnees, Personnage *personnage);
+int collision(Personnage *perso, int listeCollision[TAILLE_LISTE_COLLISION], int listeCollisionRessources[TAILLE_LISTE_RESSOURCES], Coordonnees *coordonnees, int *listeXYColision[2]);
+int petitTestAvecListeXY(int listeXY[2][4], int x, int y);
+void renvoieXYColision(int *listeXY[2][4], Coordonnees *coordonnees);
+void updateEvent(Input *input, Personnage *personnage);
+int gestionEvenement (Input *input, Personnage *personnage);
+void verificationHautArbre(Personnage *perso);

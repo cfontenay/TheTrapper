@@ -1,0 +1,28 @@
+#ifndef MANIPULATIONLISTEMONSTRES_H_INCLUDED
+#define MANIPULATIONLISTEMONSTRES_H_INCLUDED
+#include "ia.h"
+
+typedef struct monstre Monstre;
+typedef struct listeMonstre ListeMonstres;
+typedef struct listeBlock ListeBlocks;
+typedef struct elementListeMonstres ElementListeMonstres;
+
+
+struct monstre{
+    int degat, vie, vitesse, momentAffichage;
+    int coordx, coordy;
+};
+
+
+struct elementListeMonstres{
+    ElementListeBlock *suivant;
+    ElementListeBlock *precedent;
+    Monstre *valeur;
+};
+struct listeMonstre{
+    ElementListeMonstres *premier;
+    ElementListeMonstres *dernier;
+    ElementListeMonstres *cle;
+};
+
+#endif // MANIPULATIONLISTEMONSTRES_H_INCLUDED

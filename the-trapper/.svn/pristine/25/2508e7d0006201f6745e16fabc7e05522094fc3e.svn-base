@@ -1,0 +1,14 @@
+#ifndef IA_H_INCLUDED
+#define IA_H_INCLUDED
+
+typedef struct block Block;
+struct block{
+    int x, y;       //coordonnées en pixels/64
+};
+
+struct elementListeBlock{
+    ElementListeBlock *suivant;
+    ElementListeBlock *precedent;
+    Block *valeur;
+};
+#endif // IA_H_INCLUDED

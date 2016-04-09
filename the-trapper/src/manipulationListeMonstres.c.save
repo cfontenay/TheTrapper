@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <manipulationListeMonstres.h>
+
+int estVideListeMonstres (ListeMonstres *liste){
+    if (liste->premier == NULL || liste->dernier == NULL)
+        return True;
+    return False;
+}
+int estDernierListeMonstres (ListeMonstres *liste){
+    if (estVideListeMonstres(liste) == False && liste->cle == liste->dernier)
+        return True;
+    return False;
+}
+int estPremierListeMonstres (ListeMonstres *liste){
+    if (estVideListeMonstres(liste) == False && liste->cle == liste->premier)
+        return True;
+    return False;
+}
+int nombreElementListeMonstres (ListeMonstres *liste){
+    int i = 0;
+    if (estVideListeMonstres(liste) == False){
+        liste->cle = liste->premier;
+        while (liste->cle != NULL){
+            i ++;
+            deplacerCleDevant(liste);
+        }
+    }
+    return i;
+}
+ListeMonstres* creerListeMonstres (void){
+    ListeMonstres *nouv = malloc(sizeof(ListeMonstres));
+    nouv
+}
+
+void deplacerCleDevantListeMonstres (ListeMonstres *liste){
+    if (estVideListeMonstres(liste) == False){
+        liste->cle = liste->cle->suivant;
+    }
+}
+void deplacerCleDerriereListeMonstres (ListeMonstres *liste){
+    if (estVideListeMonstres(liste) == False){
+        liste->cle = liste->cle->precedent;
+    }
+}
+void supprimerELementListeMonstres (ListeMonstres *liste){      //remet la clé au début
+    if (estVideListeMonstres(liste) == False){
+        if (liste->cle->precedent != NULL)
+            liste->cle->precedent->suivant = liste->cle->suivant;
+        if (liste->cle->suivant != NULL)
+            liste->cle->suivant->precedent = liste->cle->precedent;
+
+        free(liste->cle);
+        liste->cle = liste->premier;
+    }
+}
+void ajouterElementFinListeMonstres (ListeMonstres *liste, Monstre monstre){    //remet la clé à la fin
+    ElementListeMonstres *nouv = malloc(sizeof(ElementListeMonstres));
+    nouv->valeur = monstre;
+    nouv->suivant = NULL;
+    nouv->precedent = NULL;
+    if (nombreElementListeMonstres(liste) == 0){
+        liste->premier = liste->dernier = nouv;
+    }
+    else{
+        nouv->precedent = liste->dernier->precedent;
+        liste->dernier = nouv;
+    }
+    liste->cle = liste->dernier;
+}

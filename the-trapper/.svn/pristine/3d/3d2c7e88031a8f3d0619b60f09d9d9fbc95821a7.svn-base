@@ -1,0 +1,801 @@
+# depslib dependency file v1.0
+1455008741 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/affichage.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"affichage.h"
+	"gestionAnimaux.h"
+	"manipulationListeBatiments.h"
+	"gestionMonstres.h"
+	"manipulationListeMonstres.h"
+
+1436763871 /home/clement/Bureau/the trapper version linux/the_trapper/src/affichage.h
+	"define.h"
+	"personnage.h"
+
+1455012228 /home/clement/Bureau/the trapper version linux/the_trapper/src/define.h
+
+1453284433 /home/clement/Bureau/the trapper version linux/the_trapper/src/personnage.h
+	"define.h"
+	"systemeQuetes.h"
+	"gestionFaim.h"
+	"define.h"
+	"chargement_Image.h"
+
+1442844463 /home/clement/Bureau/the trapper version linux/the_trapper/src/systemeQuetes.h
+	"main.h"
+
+1448208099 /home/clement/Bureau/the trapper version linux/the_trapper/src/main.h
+	"chargement_Image.h"
+	"gestionRessources.h"
+	"inventaire.h"
+	"define.h"
+
+1452784101 /home/clement/Bureau/the trapper version linux/the_trapper/src/chargement_Image.h
+	<SDL2/SDL.h>
+
+1426274499 /home/clement/Bureau/the trapper version linux/the_trapper/src/gestionRessources.h
+	"define.h"
+	"personnage.h"
+
+1426936018 /home/clement/Bureau/the trapper version linux/the_trapper/src/inventaire.h
+	"chargement_Image.h"
+	"personnage.h"
+	"define.h"
+
+1445094855 /home/clement/Bureau/the trapper version linux/the_trapper/src/gestionFaim.h
+
+1453993474 /home/clement/Bureau/the trapper version linux/the_trapper/src/gestionAnimaux.h
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"personnage.h"
+	"manipulationListeMonstres.h"
+
+1448208834 /home/clement/Bureau/the trapper version linux/the_trapper/src/manipulationListeBatiments.h
+	"gestionBatiments.h"
+	"defineBatiment.h"
+
+1448054267 /home/clement/Bureau/the trapper version linux/the_trapper/src/gestionBatiments.h
+
+1448213429 /home/clement/Bureau/the trapper version linux/the_trapper/src/defineBatiment.h
+	"initialisationBatiments.h"
+
+1448795320 /home/clement/Bureau/the trapper version linux/the_trapper/src/initialisationBatiments.h
+	"defineBatiment.h"
+
+1448795861 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/affichageBatiments.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"chargement_Sons.h"
+	"affichageBatiments.h"
+	"defineBatiment.h"
+	"manipulationListeBatiments.h"
+
+1443445759 /home/clement/Bureau/the trapper version linux/the_trapper/src/chargement_Sons.h
+	<SDL2/SDL_mixer.h>
+
+1448208794 /home/clement/Bureau/the trapper version linux/the_trapper/src/affichageBatiments.h
+	"manipulationListeBatiments.h"
+
+1448209716 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/cabane.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"main.h"
+	"define.h"
+	"menu.h"
+	"calculMain.h"
+	"affichage.h"
+
+1437938088 /home/clement/Bureau/the trapper version linux/the_trapper/src/menu.h
+	"chargement_Image.h"
+	"personnage.h"
+
+1452807885 /home/clement/Bureau/the trapper version linux/the_trapper/src/calculMain.h
+	"define.h"
+	"personnage.h"
+	"main.h"
+
+1454256480 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/calculMain.c
+	<stdio.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"calculMain.h"
+	"chargement_Sons.h"
+	"gestionAnimaux.h"
+	"manipulationListeBatiments.h"
+	"manipulationListeMonstres.h"
+	"define.h"
+	"gestionMonstres.h"
+
+1453282837 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/chargement_Image.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"chargement_Image.h"
+	"define.h"
+	"personnage.h"
+
+1453827482 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/chargement_Sons.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"chargement_Sons.h"
+
+1454002023 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/gestionAnimaux.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"gestionAnimaux.h"
+	"gestionMonstres.h"
+	"manipulationListeMonstres.h"
+	"define.h"
+	"personnage.h"
+
+1453281425 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/gestionBatiments.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"chargement_Sons.h"
+	"gestionBatiments.h"
+	"defineBatiment.h"
+	"manipulationListeBatiments.h"
+
+1455009619 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/gestionCombat.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"calculMain.h"
+	"affichage.h"
+	"chargement_Sons.h"
+	"personnage.h"
+	"chargement_Image.h"
+	"gestionAnimaux.h"
+	"gestionCombat.h"
+	"gestionMonstres.h"
+	"ia.h"
+	"manipulationListeMonstres.h"
+	"manipulationListeBatiments.h"
+
+1445609722 /home/clement/Bureau/the trapper version linux/the_trapper/src/gestionCombat.h
+
+1445758227 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/gestionFaim.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"define.h"
+	"calculMain.h"
+	"affichage.h"
+	"gestionAnimaux.h"
+	"personnage.h"
+
+1455012264 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/gestionMonstres.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	"gestionAnimaux.h"
+	"define.h"
+	"personnage.h"
+	"manipulationListeMonstres.h"
+	"gestionMonstres.h"
+
+1445756680 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/gestionMort.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"menu.h"
+	"calculMain.h"
+	"affichage.h"
+	"chargement_Sons.h"
+	"gestionAnimaux.h"
+	"gestionMort.h"
+
+1445753544 /home/clement/Bureau/the trapper version linux/the_trapper/src/gestionMort.h
+
+1445185553 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/gestionRessources.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"gestionRessources.h"
+	"main.h"
+
+1453280886 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/gestionTemps.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"gestionTemps.h"
+
+1417973970 /home/clement/Bureau/the trapper version linux/the_trapper/src/gestionTemps.h
+	"define.h"
+	"personnage.h"
+
+1453997064 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/ia.c
+	<stdio.h>
+	"ia.h"
+	"personnage.h"
+	<math.h>
+
+1452188441 /home/clement/Bureau/the trapper version linux/the_trapper/src/ia.h
+	"personnage.h"
+
+1454165514 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/initialisation.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"main.h"
+	"define.h"
+	"menu.h"
+	"calculMain.h"
+	"affichage.h"
+	"gestionAnimaux.h"
+	"gestionMonstres.h"
+
+1453235563 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/initialisationBatiments.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"defineBatiment.h"
+	"gestionBatiments.h"
+	"chargement_Sons.h"
+	"initialisationBatiments.h"
+	"string.h"
+	"manipulationListeBatiments.h"
+
+1446369642 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/inventaire.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"inventaire.h"
+
+1453283435 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/main.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"menu.h"
+	"calculMain.h"
+	"affichage.h"
+	"chargement_Sons.h"
+	"gestionAnimaux.h"
+	"manipulationListeBatiments.h"
+	"manipulationListeMonstres.h"
+	"gestionMonstres.h"
+
+1453043777 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/manipulationListeAnimaux.c
+	<stdio.h>
+	<stdbool.h>
+	"gestionAnimaux.h"
+
+1454002300 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/manipulationListeBatiments.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"chargement_Sons.h"
+	"manipulationListeBatiments.h"
+	"defineBatiment.h"
+
+1453805131 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/manipulationListeBlock.c
+	<stdio.h>
+	"ia.h"
+
+1455008974 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/manipulationListeMonstres.c
+	<stdio.h>
+	<stdlib.h>
+	"manipulationListeMonstres.h"
+
+1455008298 /home/clement/Bureau/the trapper version linux/the_trapper/src/manipulationListeMonstres.h
+	"ia.h"
+
+1449423815 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/menu.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"menu.h"
+	"chargement_Sons.h"
+	"manipulationListeBatiments.h"
+
+1453284628 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/personnage.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"personnage.h"
+	"define.h"
+	"manipulationListeBatiments.h"
+	"manipulationListeMonstres.h"
+	"gestionMonstres.h"
+
+1453208271 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/reglages.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"reglages.h"
+
+1441036668 /home/clement/Bureau/the trapper version linux/the_trapper/src/reglages.h
+	"define.h"
+
+1446365963 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/systemeQuetes.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"systemeQuetes.h"
+
+1452803873 source:/home/clement/Bureau/the trapper version linux/the_trapper/src/testIA.c
+	<stdio.h>
+	"ia.h"
+	"personnage.h"
+
+1454063668 /home/clement/Bureau/the trapper version linux/the_trapper/src/gestionMonstres.h
+
+1448795861 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/affichageBatiments.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"chargement_Sons.h"
+	"affichageBatiments.h"
+	"defineBatiment.h"
+	"manipulationListeBatiments.h"
+
+1448208099 /home/clement/Dropbox/the trapper version linux/the_trapper/src/main.h
+	"chargement_Image.h"
+	"gestionRessources.h"
+	"inventaire.h"
+	"define.h"
+
+1457647856 /home/clement/Dropbox/the trapper version linux/the_trapper/src/chargement_Image.h
+	<SDL2/SDL.h>
+
+1426274499 /home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionRessources.h
+	"define.h"
+	"personnage.h"
+
+1457776127 /home/clement/Dropbox/the trapper version linux/the_trapper/src/define.h
+
+1457651670 /home/clement/Dropbox/the trapper version linux/the_trapper/src/personnage.h
+	"define.h"
+	"systemeQuetes.h"
+	"gestionFaim.h"
+	"define.h"
+	"chargement_Image.h"
+
+1442844463 /home/clement/Dropbox/the trapper version linux/the_trapper/src/systemeQuetes.h
+	"main.h"
+
+1445094855 /home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionFaim.h
+
+1426936018 /home/clement/Dropbox/the trapper version linux/the_trapper/src/inventaire.h
+	"chargement_Image.h"
+	"personnage.h"
+	"define.h"
+
+1443445759 /home/clement/Dropbox/the trapper version linux/the_trapper/src/chargement_Sons.h
+	<SDL2/SDL_mixer.h>
+
+1448208794 /home/clement/Dropbox/the trapper version linux/the_trapper/src/affichageBatiments.h
+	"manipulationListeBatiments.h"
+
+1448208834 /home/clement/Dropbox/the trapper version linux/the_trapper/src/manipulationListeBatiments.h
+	"gestionBatiments.h"
+	"defineBatiment.h"
+
+1448054267 /home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionBatiments.h
+
+1448213429 /home/clement/Dropbox/the trapper version linux/the_trapper/src/defineBatiment.h
+	"initialisationBatiments.h"
+
+1448795320 /home/clement/Dropbox/the trapper version linux/the_trapper/src/initialisationBatiments.h
+	"defineBatiment.h"
+
+1448209716 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/cabane.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"main.h"
+	"define.h"
+	"menu.h"
+	"calculMain.h"
+	"affichage.h"
+
+1437938088 /home/clement/Dropbox/the trapper version linux/the_trapper/src/menu.h
+	"chargement_Image.h"
+	"personnage.h"
+
+1452807885 /home/clement/Dropbox/the trapper version linux/the_trapper/src/calculMain.h
+	"define.h"
+	"personnage.h"
+	"main.h"
+
+1436763871 /home/clement/Dropbox/the trapper version linux/the_trapper/src/affichage.h
+	"define.h"
+	"personnage.h"
+
+1457647897 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/chargement_Image.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"chargement_Image.h"
+	"define.h"
+	"personnage.h"
+
+1453827482 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/chargement_Sons.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"chargement_Sons.h"
+
+1454002023 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionAnimaux.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"gestionAnimaux.h"
+	"gestionMonstres.h"
+	"manipulationListeMonstres.h"
+	"define.h"
+	"personnage.h"
+
+1453993474 /home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionAnimaux.h
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"personnage.h"
+	"manipulationListeMonstres.h"
+
+1455035907 /home/clement/Dropbox/the trapper version linux/the_trapper/src/manipulationListeMonstres.h
+	"ia.h"
+
+1452188441 /home/clement/Dropbox/the trapper version linux/the_trapper/src/ia.h
+	"personnage.h"
+
+1454063668 /home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionMonstres.h
+
+1453281425 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionBatiments.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"chargement_Sons.h"
+	"gestionBatiments.h"
+	"defineBatiment.h"
+	"manipulationListeBatiments.h"
+
+1445758227 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionFaim.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"define.h"
+	"calculMain.h"
+	"affichage.h"
+	"gestionAnimaux.h"
+	"personnage.h"
+
+1445756680 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionMort.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"menu.h"
+	"calculMain.h"
+	"affichage.h"
+	"chargement_Sons.h"
+	"gestionAnimaux.h"
+	"gestionMort.h"
+
+1445753544 /home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionMort.h
+
+1445185553 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionRessources.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"gestionRessources.h"
+	"main.h"
+
+1453280886 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionTemps.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"gestionTemps.h"
+
+1417973970 /home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionTemps.h
+	"define.h"
+	"personnage.h"
+
+1453997064 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/ia.c
+	<stdio.h>
+	"ia.h"
+	"personnage.h"
+	<math.h>
+
+1453235563 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/initialisationBatiments.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"defineBatiment.h"
+	"gestionBatiments.h"
+	"chargement_Sons.h"
+	"initialisationBatiments.h"
+	"string.h"
+	"manipulationListeBatiments.h"
+
+1446369642 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/inventaire.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"inventaire.h"
+
+1457692959 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/main.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"menu.h"
+	"calculMain.h"
+	"affichage.h"
+	"chargement_Sons.h"
+	"gestionAnimaux.h"
+	"manipulationListeBatiments.h"
+	"manipulationListeMonstres.h"
+	"gestionMonstres.h"
+
+1453043777 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/manipulationListeAnimaux.c
+	<stdio.h>
+	<stdbool.h>
+	"gestionAnimaux.h"
+
+1454002300 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/manipulationListeBatiments.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"chargement_Sons.h"
+	"manipulationListeBatiments.h"
+	"defineBatiment.h"
+
+1453805131 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/manipulationListeBlock.c
+	<stdio.h>
+	"ia.h"
+
+1457692497 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/menu.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"menu.h"
+	"chargement_Sons.h"
+	"manipulationListeBatiments.h"
+
+1453208271 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/reglages.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"reglages.h"
+
+1441036668 /home/clement/Dropbox/the trapper version linux/the_trapper/src/reglages.h
+	"define.h"
+
+1446365963 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/systemeQuetes.c
+	<stdio.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"systemeQuetes.h"
+
+1452803873 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/testIA.c
+	<stdio.h>
+	"ia.h"
+	"personnage.h"
+
+1457692908 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/affichage.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"affichage.h"
+	"gestionAnimaux.h"
+	"manipulationListeBatiments.h"
+	"gestionMonstres.h"
+	"manipulationListeMonstres.h"
+
+1457776918 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/calculMain.c
+	<stdio.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"calculMain.h"
+	"chargement_Sons.h"
+	"gestionAnimaux.h"
+	"manipulationListeBatiments.h"
+	"manipulationListeMonstres.h"
+	"define.h"
+	"gestionMonstres.h"
+
+1457692080 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionCombat.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
+	"main.h"
+	"define.h"
+	"calculMain.h"
+	"affichage.h"
+	"chargement_Sons.h"
+	"personnage.h"
+	"chargement_Image.h"
+	"gestionAnimaux.h"
+	"gestionCombat.h"
+	"gestionMonstres.h"
+	"ia.h"
+	"manipulationListeMonstres.h"
+	"manipulationListeBatiments.h"
+
+1445609722 /home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionCombat.h
+
+1455038191 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/gestionMonstres.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	"gestionAnimaux.h"
+	"define.h"
+	"personnage.h"
+	"manipulationListeMonstres.h"
+	"gestionMonstres.h"
+
+1457776652 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/initialisation.c
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"main.h"
+	"define.h"
+	"menu.h"
+	"calculMain.h"
+	"affichage.h"
+	"gestionAnimaux.h"
+	"gestionMonstres.h"
+
+1455036039 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/manipulationListeMonstres.c
+	<stdio.h>
+	<stdlib.h>
+	"manipulationListeMonstres.h"
+
+1457692080 source:/home/clement/Dropbox/the trapper version linux/the_trapper/src/personnage.c
+	<stdio.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_image.h>
+	<SDL2/SDL_ttf.h>
+	"personnage.h"
+	"define.h"
+	"manipulationListeBatiments.h"
+	"manipulationListeMonstres.h"
+	"gestionMonstres.h"
+

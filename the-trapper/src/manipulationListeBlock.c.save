@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include "ia.h"
+
+
+ListeBlocks* creerListeBlock (void)
+{
+    ListeBlocks *nouv = malloc(sizeof(ListeBlocks));
+    nouv->premier = nouv->dernier = nouv->cle = NULL;
+    return nouv;
+}
+int estVideListeBlock (ListeBlocks *liste)
+{
+    if (liste->premier == NULL || liste->dernier == NULL)
+        return True;
+
+    return False;
+}
+
+int nombreELementListeBlock (ListeBlocks *liste)
+{
+    liste->cle = liste->premier;
+    int i = 0;
+    while (liste->cle != NULL){
+        i++;
+        deplacerCleDevantListeBLock(liste);
+    }
+    liste->cle = liste->premier;
+    return i;
+}
+void ajouterElementListeBlock (ListeBlocks *liste, Block block)     //ajoute à la fin et place la clé à la fin
+{
+    ElementListeBlock *elem = malloc(sizeof(ElementListeBlock));
+    elem->precedent = elem->suivant = NULL;
+    elem->valeur = malloc(sizeof(Block));
+    elem->valeur->f = block.f;
+    elem->valeur->g = block.g;
+    elem->valeur->h = block.h;
+    elem->valeur->x = block.x;
+    elem->valeur->y = block.y;
+
+    if (estVideListeBlock(liste) == True)
+    {
+        liste->premier = elem;
+        liste->dernier = elem;
+    }
+    else{
+        elem->precedent = liste->dernier;
+        liste->dernier->suivant = elem;
+        liste->dernier = elem;
+    }
+
+    liste->cle = liste->dernier;
+}
+void supprimerElementListeBlock (ListeBlocks *liste)
+{
+    if (liste->cle == liste->premier)
+    {
+        liste->premier->suivant->precedent = NULL;
+        liste->premier = liste->premier->suivant;
+        free(liste->cle);
+    }
+    else if (liste->cle == liste->dernier)
+    {
+        liste->dernier->precedent->suivant = NULL;
+        liste->dernier = liste->dernier->precedent;
+        free(liste->cle);
+    }
+    else
+    {
+        liste->cle->suivant->precedent = liste->cle->precedent;
+        liste->cle->precedent->suivant = liste->cle->suivant;
+        
+    }
+    liste->cle = liste->premier;
+}
+void supprimerELementDebutListeBlock (ListeBlocks *liste)       //replace la clé au début
+{
+    if (estVideListeBlock(liste) == False)
+    {
+        liste->cle = liste->premier;
+        liste->premier = liste->premier->suivant;
+        if (liste->premier != NULL)
+            liste->premier->precedent = NULL;
+        free(liste->cle);
+
+    }
+    liste->cle = liste->premier;
+}
+void deplacerCleDevantListeBLock (ListeBlocks *liste)
+{
+    if (estVideListeBlock(liste) != True && liste->cle != NULL)
+        liste->cle = liste->cle->suivant;
+
+}
+void deplacerCleDerriereListeBlock (ListeBlocks *liste)
+{
+    if (estVideListeBlock(liste) != True && liste->cle != NULL)
+        liste->cle = liste->cle->precedent;
+
+}
+void afficherListeBlock (ListeBlocks *liste)
+{
+    printf("\n Liste Blocks : \n");
+    int i;
+    liste->cle = liste->premier;
+    int n = nombreELementListeBlock(liste);
+    for (i = 0; i < n; i++)
+    {
+        printf("%d : x = %d  et y = %d et f = %f et h = %f --> \n", i, liste->cle->valeur->x, liste->cle->valeur->y, liste->cle->valeur->f, liste->cle->valeur->h);
+        deplacerCleDevantListeBLock(liste);
+    }
+    liste->cle = liste->premier;
+}

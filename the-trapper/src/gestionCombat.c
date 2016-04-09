@@ -1,0 +1,279 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+#include "main.h"
+#include "define.h"
+#include "calculMain.h"
+#include "affichage.h"
+#include "chargement_Sons.h"
+#include "personnage.h"
+#include "chargement_Image.h"
+#include "gestionAnimaux.h"
+#include "gestionCombat.h"
+#include "gestionMonstres.h"
+#include "ia.h"
+#include "manipulationListeMonstres.h"
+#include "manipulationListeBatiments.h"
+
+void donnerCoup(SDL_Renderer *rendu, struct listeAnimal *listeAnimaux, struct parametreAnimaux *tabParam, Personnage *personnage, Images *toutesLesImages, TTF_Font *police, ListeMonstres *listeMonstres, ParametresMonstres *tabParamMonstres, ListeBatiments *listeBat)
+{
+    animationCoup(rendu, personnage, toutesLesImages, listeAnimaux, tabParam, police, listeMonstres, tabParamMonstres,listeBat);
+    //après on regarde les dégats
+
+
+    int distanceMax = 100;
+    int coordPerso[2] = {(personnage->coordXA + personnage->coordXB)/2, (personnage->coordYA + personnage->coordYB)/2};
+
+    int distance = distanceMax;
+    int vertical = 0;
+    int coordBete[2][2];
+    int contactBete = False, contactAnim = False;
+
+
+    int n1 = nombreElementListeMonstres(listeMonstres);
+    int n2 = tailleListe(listeAnimaux);
+
+    listeMonstres->cle = listeMonstres->premier;
+    debut(listeAnimaux);
+    int i = 0, p = 0, e = 0;
+
+    while (i < n1 || p < n2)
+    {
+        contactBete = contactAnim = False;
+        if (testChampsVisionMonstres(listeMonstres, personnage) == True)
+        {
+            coordBete[0][0] = listeMonstres->cle->valeur->coordx + LARGEUR_TILE/2;
+            coordBete[0][1] = listeMonstres->cle->valeur->coordy + LARGEUR_TILE/2;
+        }
+        if (testChampsVisionAnimaux(listeAnimaux, personnage) == True)
+        {
+            coordBete[1][0] = listeAnimaux->cle->valeur->coordx + LARGEUR_TILE/2;
+            coordBete[1][1] = listeAnimaux->cle->valeur->coordy + LARGEUR_TILE/2;
+            printf("mededed\n");
+        }
+
+        switch(personnage->orientation)
+            {
+            case DROITE:
+                for(e = 0; e < 2; e++)
+                {
+                    if (coordBete[e][0] >= coordPerso[0] && coordBete[e][0] <= coordPerso[0] + distanceMax)
+                    {
+                        if ((coordBete[e][1] >= (coordPerso[1] - distanceMax/2)) && coordBete[e][1] <= (coordPerso[1] + distanceMax/2))
+                        {
+                            if (e == 0)
+                                contactBete = True;
+                            else
+                                contactAnim = True;
+                        }
+                    }
+                }
+                break;
+            case GAUCHE:
+                for (e = 0; e < 2; e++)
+                {
+                    if (coordBete[e][0] >= coordPerso[0] - distanceMax && coordBete[e][0] <= coordPerso[0])
+                    {
+                        if (coordBete[e][1] >= coordPerso[1] - distanceMax/2 && coordBete[e][1] <= coordPerso[1] + distanceMax/2)
+                        {
+                            if (e == 0)
+                                contactBete = True;
+                            else
+                                contactAnim = True;
+                        }
+                    }
+                }
+
+                break;
+            case HAUT:
+                for (e = 0; e < 2; e++)
+                {
+                    if (coordBete[e][1] >= coordPerso[1] - distanceMax && coordBete[e][1] <= coordPerso[1])
+                    {
+                        if (coordBete[e][0] >= coordPerso[0] - distanceMax/2 && coordBete[e][0] <= coordPerso[0] + distanceMax/2)
+                        {
+                            if (e == 0)
+                                contactBete = True;
+                            else
+                                contactAnim = True;
+                        }
+                    }
+                }
+                break;
+            case BAS:
+                for (e = 0; e < 2; e++)
+                {
+                    if (coordBete[e][1] >= coordPerso[1] && coordBete[e][1] <= coordPerso[1] + distanceMax)
+                    {
+                        if (coordBete[e][0] >= coordPerso[0] - distanceMax/2 && coordBete[e][0] <= coordPerso[0] + distanceMax/2)
+                        {
+                            if (e == 0)
+                                contactBete = True;
+                            else
+                                contactAnim = True;
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+
+            }
+            if (contactBete == True || contactAnim == True)
+            {
+                if (retirerVieAnimauxEtMonstres(listeAnimaux, personnage, listeMonstres, contactAnim) == True)
+                {
+                    if (contactBete == True)
+                    {
+                        gestionDropMonstres(listeMonstres, tabParamMonstres, personnage);
+                        supprimerELementListeMonstres(listeMonstres);
+                    }
+                    if (contactAnim == True)
+                    {
+                        gestionDropAnimaux(listeAnimaux, tabParam, personnage);
+                        supprimerElement(listeAnimaux);
+                    }
+                }
+            }
+
+        deplacerCleDevantListeMonstres(listeMonstres);
+        deplacerCleDevant(listeAnimaux);
+        if (i < n1)
+            i++;
+        if (p < n2)
+            p++;
+    }
+
+}
+
+void gestionAttaqueSurPersonnage(Personnage *personnage, ListeMonstres *listeMonstres, ParametresMonstres *tabParamMonstres)
+{
+    if (SDL_GetTicks() - listeMonstres->cle->valeur->tempsAttaque > TPS_ATTAQUE_MONSTRE)
+    {
+        listeMonstres->cle->valeur->tempsAttaque = SDL_GetTicks();
+        personnage->tempsClignote = SDL_GetTicks();
+        personnage->faim -= tabParamMonstres[listeMonstres->cle->valeur->race].degat;
+    }
+
+}
+int retirerVieAnimauxEtMonstres (struct listeAnimal *listeAnimaux, Personnage *personnage, ListeMonstres *listeMonstres,int animal)
+{
+    int id = personnage->inventairePerso.barrePlacement[personnage->inventairePerso.caseSelectionnerBarrePlacement].id;
+
+    if (id == 23)   //épée
+    {
+        if (animal == True)
+            listeAnimaux->cle->valeur->sante -= DEGAT_EPEE;
+        else
+            listeMonstres->cle->valeur->sante -= DEGAT_EPEE;
+    }
+
+    else if (id == 16 || id == 19)
+    {
+        if( animal == True)
+            listeAnimaux->cle->valeur->sante -= DEGAT_PIOCHE;
+        else
+            listeMonstres->cle->valeur->sante -= DEGAT_PIOCHE;
+    }
+    else if (id == 17 || id == 20)
+    {
+        if (animal == True)
+            listeAnimaux->cle->valeur->sante -= DEGAT_HACHE;
+        else
+            listeMonstres->cle->valeur->sante -= DEGAT_HACHE;
+    }
+    else if (id == 18 || id == 21)
+    {
+        if (animal == True)
+            listeAnimaux->cle->valeur->sante -= DEGAT_PELLE;
+        else
+            listeMonstres->cle->valeur->sante -= DEGAT_PELLE;
+    }
+    else
+    {
+        if (animal == True)
+            listeAnimaux->cle->valeur->sante -= DEGAT_POING;
+        else
+            listeMonstres->cle->valeur->sante -= DEGAT_POING;
+    }
+    if (animal != True)
+        listeMonstres->cle->valeur->recuCoup = True;
+    else
+        listeAnimaux->cle->valeur->recuCoup = True;
+
+    if (listeAnimaux->cle->valeur->sante <= 0 || listeMonstres->cle->valeur->sante <= 0)
+    {
+        return True;
+    }
+    return False;
+}
+void animationCoup (SDL_Renderer *rendu, Personnage *personnage, Images *toutesLesImages, struct listeAnimal *listeAnimaux, struct parametreAnimaux *tabParam, TTF_Font *police, ListeMonstres *listeMonstres, ParametresMonstres *tabParamMonstres, ListeBatiments *listeBat)
+{
+    SDL_Rect coordAffichage, coordDecoupage;
+    renvoieCoordDecoupageCoup(personnage, toutesLesImages, &coordDecoupage);
+
+    /* À finir : */
+    coordAffichage.x = personnage->coordonnees.coordPersoEcran.x;
+    if (personnage->orientation == GAUCHE)
+        coordAffichage.x = personnage->coordonnees.coordPersoEcran.x + 23 - coordDecoupage.w;       //23 c'est la largeur de l'image du perso
+    else if (personnage->orientation == DROITE)
+        coordAffichage.x = personnage->coordonnees.coordPersoEcran.x;
+    coordAffichage.y = personnage->coordonnees.coordPersoEcran.y;
+
+
+    /* c'est parti pour les blits*/
+    int i = 0, calcul = 0, id = personnage->inventairePerso.barrePlacement[personnage->inventairePerso.caseSelectionnerBarrePlacement].id;
+    unsigned long long tempsActuel = SDL_GetTicks(), temps = tempsActuel, tempsAffichage = temps;
+    while (calcul <= (VITESSE_FRAME_COUP*NB_FRAME_COUP))
+    {
+        tempsActuel = SDL_GetTicks();
+        calcul = tempsActuel - temps;
+        if (calcul >= VITESSE_FRAME_COUP*i)
+        {
+            coordDecoupage.x = i*coordDecoupage.w;
+            i += 1;
+        }
+        if (tempsActuel - tempsAffichage > 32)
+        {
+            blitCarteV3(personnage, toutesLesImages, listeBat);
+            gestionAnimaux(listeAnimaux, personnage, tabParam);
+            gestionMonstres(listeMonstres, personnage, tabParamMonstres);
+            blitAnimaux(listeAnimaux, toutesLesImages, personnage);
+            blitMonstres(listeMonstres, toutesLesImages, personnage);
+            afficherInterfaceV2(personnage, police, toutesLesImages);
+            affichageCurseurSouris(personnage, toutesLesImages, toutesLesImages->surfaceGenerale, NULL);
+            if (id < 16 || id >= 29)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupPoing, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+            else if (id == 16 || id == 19)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupPioche, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+            else if (id == 17 || id == 20)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupHache, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+            else if (id == 18 || id == 21)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupPelle, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+            else if (id == 23)
+                SDL_BlitSurface(toutesLesImages->imagesPersonnage.tileSetAnimationCoupEpee, &coordDecoupage, toutesLesImages->surfaceGenerale, &coordAffichage);
+
+
+
+            blittageTexture(rendu, toutesLesImages);
+            SDL_RenderPresent(rendu);
+            tempsAffichage = tempsActuel;
+        }
+
+
+    }
+
+}
+
+void renvoieCoordDecoupageCoup(Personnage *personnage, Images *toutesLesImages, SDL_Rect *coord)
+{
+    coord->w = toutesLesImages->imagesPersonnage.tileSetAnimationCoupEpee->w/NB_FRAME_COUP;
+    coord->h = toutesLesImages->imagesPersonnage.tileSetAnimationCoupEpee->h/4;
+    coord->y = (personnage->orientation-2) * coord->h;
+}
+

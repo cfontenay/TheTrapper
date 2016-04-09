@@ -1,0 +1,42 @@
+#ifndef MENU_H_INCLUDED
+#define MENU_H_INCLUDED
+
+typedef struct coordonneesMenu coordonneesMenu;
+struct coordonneesMenu
+{
+    SDL_Rect fond, coordDecoupeFond, coordDecoupeFond2, coordDecoupeFond3;
+    SDL_Rect boutons[4];
+};
+typedef struct coordonneesMenuCharger coordonneesMenuCharger;
+struct coordonneesMenuCharger
+{
+    SDL_Rect fond;
+    SDL_Rect sauvegarde[3];
+    SDL_Rect imagesPartie[3];
+    SDL_Rect titreSauvegarde[3];
+    SDL_Rect boutonsModifier[3];
+    SDL_Rect boutonsJouer[3];
+    SDL_Rect boutonRetour;
+};
+typedef struct coordonneesMenuPause coordonneesMenuPause;
+struct coordonneesMenuPause
+{
+    SDL_Rect boutonReprendre, boutonSauvegarder, boutonQuitter;
+    SDL_Rect fond;
+};
+
+#endif // MENU_H_INCLUDED
+
+#include "chargement_Image.h"
+#include "personnage.h"
+#define Y_DE_BASE_BOUTON 150
+
+int menu(SDL_Window *ecran, Personnage *personnage, Images *toutesLesImages);
+int evenementsMenu(coordonneesMenu coords, SDL_Window *ecran, Images *toutesLesImages, int r);
+void afficherMenu(SDL_Window *ecran, Images *toutesLesImages, coordonneesMenu coords, int rep);
+void afficherFondMenuPrincipal(SDL_Window *ecran, coordonneesMenu *coords);
+int menuCharger(SDL_Window *ecran, Personnage *personnage, Images *toutesLesImages, coordonneesMenuCharger coordsMenuCharger);
+void afficherMenuCharger(SDL_Window *ecran, Images *toutesLesImages, coordonneesMenuCharger coordsMenuCharger, int rep, Personnage *personnage);
+int evenementsMenuCharger(coordonneesMenuCharger coordsMenuCharger, Personnage *personnage);
+void afficherMenuPause(SDL_Window *ecran, Images *toutesLesImages, coordonneesMenuPause coordsMenuPause);
+int menuPause(SDL_Window *ecran, Images *toutesLesImages, Personnage *personnage, coordonneesMenuPause coordsMenuPause,int tableau[TAILLE_LARGEUR_PLAN][TAILLE_HAUTEUR_PLAN], int tableauRessources[TAILLE_LARGEUR_PLAN][TAILLE_HAUTEUR_PLAN]);

@@ -1,0 +1,11 @@
+J'ai chan
+--Cette ligne, et les suivantes ci-dessous, seront ignorées--
+
+M    bin/Debug/the_trapper
+M    src/affichage.c
+M    src/calculMain.c
+M    src/gestionAnimaux.c
+M    src/gestionAnimaux.h
+M    src/gestionCombat.c
+M    src/manipulationListeAnimaux.c
+M    the_trapper.depend

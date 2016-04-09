@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <string.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+
+void chargerSons(Sons *tousLesSons)
+{
+    tousLesSons->musiquePrincipale = Mix_LoadMUS("musiques/sons/musique.wav");
+    tousLesSons->sonMarche = Mix_LoadWav("musiques/sons/son1.wav");
+}

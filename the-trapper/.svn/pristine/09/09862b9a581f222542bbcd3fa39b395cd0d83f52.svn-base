@@ -1,0 +1,15 @@
+#ifndef INVENTAIRE_H_INCLUDED
+#define INVENTAIRE_H_INCLUDED
+
+
+typedef struct coordonneesSouris coordonneesSouris;
+struct coordonneesSouris
+{
+    int x, ;
+};
+#endif // INVENTAIRE_H_INCLUDED
+#include "chargement_Image.h"
+#include "personnage.h"
+#include "define.h"
+
+int verificationInventaire(Personnage *perso, int idObjet);

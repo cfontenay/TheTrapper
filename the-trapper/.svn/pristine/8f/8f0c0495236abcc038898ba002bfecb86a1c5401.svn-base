@@ -1,0 +1,12 @@
+#ifndef GESTIONRESSOURCES_H_INCLUDED
+#define GESTIONRESSOURCES_H_INCLUDED
+
+
+
+#endif // GESTIONRESSOURCES_H_INCLUDED
+#include "define.h"
+#include "personnage.h"
+int recolterRessourceTerre(int *tableau[TAILLE_LARGEUR_PLAN][TAILLE_HAUTEUR_PLAN],int listeCollisionRessources[TAILLE_LISTE_RESSOURCES], int deplacement, int listeXY[2][4], Personnage *personnage);
+int recolterRessourceDur(int *tableau[TAILLE_LARGEUR_PLAN][TAILLE_HAUTEUR_PLAN],int *tableauRessources[TAILLE_LARGEUR_PLAN][TAILLE_HAUTEUR_PLAN], int listeCollisionRessources[TAILLE_LISTE_RESSOURCES], int deplacement, int listeXYColision[2], Personnage *personnage);
+void ramasserRessources (int *tableauRessources[TAILLE_LARGEUR_PLAN][TAILLE_HAUTEUR_PLAN], int listeXY[2][4], Personnage *personnage);
+int planterArbre (int *tableau[TAILLE_LARGEUR_PLAN][TAILLE_HAUTEUR_CARTE], Personnage *personnage, int listeXY[2][4]);

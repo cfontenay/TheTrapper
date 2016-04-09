@@ -1,0 +1,27 @@
+#ifndef MANIPULATIONLISTEBATIMENTS_H_INCLUDED
+#define MANIPULATIONLISTEBATIMENTS_H_INCLUDED
+#include "gestionBatiments.h"
+
+typedef struct batiment Batiment;
+struct batiment
+{
+    Batiment *elementSuivant;
+    Batiment *elementPrecedent;
+    int coord[4][2];        // les coordonnées sont en pixels, première case: 1
+    int id;
+    int niveauBatiment;
+};
+
+typedef struct listeBatiments
+{
+    Batiment *premier;
+    Batiment *dernier;
+    Batiment *cle;
+    ParametresBatiments paramBatiments[TYPE_BATIMENT_DIFFERENTS];
+    ImagesBatiments images;
+
+}ListeBatiments;
+
+
+#endif // MANIPULATIONLISTEBATIMENTS_H_INCLUDED
+
